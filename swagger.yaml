@@ -1,0 +1,49 @@
+swagger: "2.0"
+info:
+  title: demo-apis
+  version: 1.0.0
+  description: |
+    GCPUG Tokyo DevOps Day September 2017 Demo API
+consumes:
+- application/json
+produces:
+- application/json
+schemes:
+- http
+host: localhost
+basePath: /api/v1
+paths:
+  /version:
+    get:
+      description: |
+        API バージョンの取得
+      operationId: getVersion
+      tags:
+        - services
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Version'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Version:
+    description: バージョン情報
+    required:
+      - version
+    properties:
+      version:
+        description: API バージョン
+        type: string
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
