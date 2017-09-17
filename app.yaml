@@ -1,0 +1,7 @@
+runtime: custom
+env: flex
+liveness_check:
+    path: '/'
+readiness_check:
+    path: '/'
+    app_start_timeout_sec: 30
