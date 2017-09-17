@@ -1,0 +1,54 @@
+{
+	"info": {
+		"name": "DemoAPIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. バージョンが取得できる (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Successful HTTP request\"] = responseCode.code === 200;",
+							"tests[\"Returns OK status\"] = responseCode.name.has(\"OK\");",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"It has a `version` string\"] = (data.version && data.version.length > 0);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{api-host}}/api/v1/version",
+				"method": "GET"
+			}
+		},
+		{
+			"name": "2. 存在しないエンドポイント (404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Successful HTTP request\"] = responseCode.code === 404;",
+							"tests[\"Returns NotFound status\"] = responseCode.name.has(\"Not Found\");",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"It has an error code\"] = (data.code == 404);",
+							"tests[\"It has an error message\"] = (data.message.indexOf('was not found') != -1);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{api-host}}/api/v1/error",
+				"method": "GET"
+			}
+		}
+	]
+}
