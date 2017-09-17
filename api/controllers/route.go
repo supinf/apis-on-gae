@@ -6,12 +6,12 @@ import (
 	"net/http"
 
 	"github.com/supinf/apis-on-gae/api/restapi/operations"
+	"github.com/supinf/apis-on-gae/api/restapi/operations/services"
 )
 
 // Routes set API handlers
-func Routes(api *operations.DemoApisAPI) error {
-	serviceAPI(api)
-	return nil
+func Routes(api *operations.DemoApisAPI) {
+	api.ServicesGetVersionHandler = services.GetVersionHandlerFunc(serviceGetVerion)
 }
 
 // Wrap wraps original HTTP handler
