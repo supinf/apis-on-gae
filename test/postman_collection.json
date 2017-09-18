@@ -27,7 +27,30 @@
 			}
 		},
 		{
-			"name": "2. 存在しないエンドポイント (404)",
+			"name": "2. 許可されていないメソッド (405)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Successful HTTP request\"] = responseCode.code === 405;",
+							"tests[\"Returns NotFound status\"] = responseCode.name.has(\"Method Not Allowed\");",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"It has an error code\"] = (data.code == 405);",
+							"tests[\"It has an error message\"] = (data.message.indexOf('POST is not allowed') != -1);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{api-host}}/api/v1/version",
+				"method": "POST"
+			}
+		},
+		{
+			"name": "3. 存在しないエンドポイント (404)",
 			"event": [
 				{
 					"listen": "test",
@@ -39,8 +62,7 @@
 							"",
 							"var data = JSON.parse(responseBody);",
 							"tests[\"It has an error code\"] = (data.code == 404);",
-							"tests[\"It has an error message\"] = (data.message.indexOf('was not found') != -1);",
-							""
+							"tests[\"It has an error message\"] = (data.message.indexOf('was not found') != -1);"
 						]
 					}
 				}
