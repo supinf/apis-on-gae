@@ -17,7 +17,16 @@ func Routes(api *operations.DemoApisAPI) {
 // Wrap wraps original HTTP handler
 func Wrap(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		handler.ServeHTTP(w, r)
+		switch {
+		case eqauls(r, "/health"):
+			w.WriteHeader(http.StatusOK)
+		default:
+			handler.ServeHTTP(w, r)
+		}
 		log.Printf("method: %s, path: %s, address: %s", r.Method, r.URL.Path, r.RemoteAddr)
 	})
+}
+
+func eqauls(r *http.Request, url string) bool {
+	return url == r.URL.Path
 }
