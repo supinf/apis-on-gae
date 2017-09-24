@@ -1,16 +1,20 @@
 runtime: custom
 env: flex
 
+endpoints_api_service:
+  name: 'your-project-id.appspot.com'
+  config_id: '2017-09-01r0'
+
 resources:
   cpu: 1
   memory_gb: 0.9
   disk_size_gb: 10
 
-liveness_check:
-    path: '/health'
-readiness_check:
-    path: '/health'
-    app_start_timeout_sec: 30
+# liveness_check:
+#     path: '/health'
+# readiness_check:
+#     path: '/health'
+#     app_start_timeout_sec: 30
 
 automatic_scaling:
   min_num_instances: 1
@@ -19,9 +23,5 @@ automatic_scaling:
   cpu_utilization:
     target_utilization: 0.7
 
-skip_files:
-- ^api
-- ^test
-- ^app.yaml
-- ^README.md
-- ^swagger.yaml
+# skip_files:
+# - ^.*$
