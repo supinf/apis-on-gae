@@ -1,1 +1,7 @@
+cmd
+models
+restapi/*
+!restapi/configure_demo_apis.go
 vendor
+Gopkg.lock
+Gopkg.toml
