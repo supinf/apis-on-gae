@@ -1,0 +1,11 @@
+{
+  "name": "gae",
+  "values": [
+    {
+      "enabled": true,
+      "key": "api-host",
+      "value": "${version}-dot-${PROJECT_ID}.appspot.com",
+      "type": "text"
+    }
+  ]
+}

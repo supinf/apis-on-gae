@@ -22,9 +22,16 @@
 				}
 			],
 			"request": {
-				"url": "{{api-host}}/api/v1/version",
-				"method": "GET"
-			}
+				"url": "{{api-host}}/version",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
 		},
 		{
 			"name": "2. 許可されていないメソッド (405)",
@@ -34,20 +41,25 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"tests[\"Successful HTTP request\"] = responseCode.code === 405;",
-							"tests[\"Returns NotFound status\"] = responseCode.name.has(\"Method Not Allowed\");",
+							"tests[\"Successful HTTP request\"] = (Math.floor(",
+							"    parseInt(responseCode.code, 10) / 100) == 4);",
 							"",
 							"var data = JSON.parse(responseBody);",
-							"tests[\"It has an error code\"] = (data.code == 405);",
-							"tests[\"It has an error message\"] = (data.message.indexOf('POST is not allowed') != -1);"
+							"tests[\"It has an error code\"] = (data.code > 0);",
+							"tests[\"It has an error message\"] = data.message;",
+							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{api-host}}/api/v1/version",
-				"method": "POST"
-			}
+				"url": "{{api-host}}/version",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		},
 		{
 			"name": "3. 存在しないエンドポイント (404)",
@@ -61,16 +73,20 @@
 							"tests[\"Returns NotFound status\"] = responseCode.name.has(\"Not Found\");",
 							"",
 							"var data = JSON.parse(responseBody);",
-							"tests[\"It has an error code\"] = (data.code == 404);",
-							"tests[\"It has an error message\"] = (data.message.indexOf('was not found') != -1);"
+							"tests[\"It has an error code\"] = (data.code > 0);",
+							"tests[\"It has an error message\"] = (data.message.indexOf('not') != -1);"
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{api-host}}/api/v1/error",
-				"method": "GET"
-			}
+				"url": "{{api-host}}/error",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

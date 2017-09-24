@@ -26,7 +26,7 @@ $ go run api/cmd/demo-apis-server/main.go --host 0.0.0.0 --port 8080
 ## e2e テスト
 
 ```
-$ newman run --environment test/postman_environment.json test/postman_collection.json
+$ newman run --environment test/postman_env_local.json test/postman_collection.json
 ```
 
 # GAE での起動
@@ -68,7 +68,7 @@ $ sed -i -e "s/^host: your-project-id/host: ${PROJECT_ID}/" swagger.yaml
 デプロイ
 
 ```
-$ gcloud service-management deploy swagger.yaml
+$ gcloud service-management deploy swagger.yaml --quiet
 ```
 
 ## App Engine の更新
@@ -96,7 +96,13 @@ $ gcloud app deploy app.yaml --no-promote --no-stop-previous-version \
 
 ## e2e テスト
 
-https://${PROJECT_ID}-dot-tokyo-devops.appspot.com/ に対して e2s テストを実行
+https://${version}-dot-${PROJECT_ID}.appspot.com/ に対して e2s テストを実行
+
+```
+$ sed -i -e "s/\"value\":.*/\"value\": \"${version}-dot-${PROJECT_ID}.appspot.com\",/" \
+    test/postman_env_gae.json
+$ newman run --environment test/postman_env_gae.json test/postman_collection.json
+```
 
 ## トラフィックの切り替え
 
