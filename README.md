@@ -23,7 +23,12 @@ $ popd
 $ go run api/cmd/demo-apis-server/main.go --host 0.0.0.0 --port 8080
 ```
 
+http://localhost:8080/version にアクセスすると値が返ってきます。  
+
 ## e2e テスト
+
+別のターミナルから以下のテストを流します。  
+（動作が確認できたら Ctrl + C で API サービスを停止しましょう）
 
 ```
 $ newman run --environment test/postman_env_local.json test/postman_collection.json
@@ -32,6 +37,13 @@ $ newman run --environment test/postman_env_local.json test/postman_collection.j
 # GAE での起動
 
 以下を全て CI で実行する
+
+## プロジェクトの指定
+
+```
+$ export PROJECT_ID=
+$ gcloud config set project $PROJECT_ID
+```
 
 ## Build, Test, Ship
 

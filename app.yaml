@@ -10,18 +10,9 @@ resources:
   memory_gb: 0.9
   disk_size_gb: 10
 
-# liveness_check:
-#     path: '/health'
-# readiness_check:
-#     path: '/health'
-#     app_start_timeout_sec: 30
-
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 2
   cool_down_period_sec: 60
   cpu_utilization:
     target_utilization: 0.7
-
-# skip_files:
-# - ^.*$
